@@ -8,10 +8,21 @@ open_canvas()
 grass = load_image('grass.png')
 character = load_image('penguin.png')
 
-x = 0
-frame = 0
-y = 0
 
+frame = 0
+
+x = 0
+while(x < 800):
+    clear_canvas()
+    grass.draw(400, 180)
+    character.clip_draw(frame * 128, 1792, 128, 128, x, 240, 100, 100)
+    update_canvas()
+    frame = (frame + 1) % 7
+    x += 20
+    delay(0.1)
+    get_events()
+
+y = 0
 while(y < 600):
     clear_canvas()
     character.clip_draw(frame * 128,  896, 128, 128, 400, y, 100, 100)
@@ -20,7 +31,7 @@ while(y < 600):
     y += 20
     delay(0.1)
     get_events()
-    
+
 y = 0
 while(y < 600):
     clear_canvas()
@@ -31,6 +42,7 @@ while(y < 600):
     delay(0.1)
     get_events()
 
+x = 0
 while(x < 800):
     clear_canvas()
     grass.draw(400, 180)
@@ -41,7 +53,6 @@ while(x < 800):
     delay(0.1)
     get_events()
 
-#close_canvas()
 x = 0
 while(x < 800):
     clear_canvas()
@@ -53,7 +64,6 @@ while(x < 800):
     delay(0.1)
     get_events()
 
-#close_canvas()
 x = 0
 while(x < 800):
     clear_canvas()
@@ -64,8 +74,6 @@ while(x < 800):
     x += 20
     delay(0.1)
     get_events()
-
-
 
 close_canvas()
 
