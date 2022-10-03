@@ -4,7 +4,6 @@ TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 
 def handle_events():
     global running
-    #global idle
     global dir
     global upDown
     global rightLeft
@@ -15,6 +14,7 @@ def handle_events():
             running = False
 
         elif event.type == SDL_KEYDOWN:
+            idle = False
             if event.key == SDLK_RIGHT:
                 rightLeft = True
                 dir += 1
@@ -29,6 +29,7 @@ def handle_events():
                 running = False
 
         elif event.type == SDL_KEYUP:
+            idle = True
             if event.key == SDLK_RIGHT:
                 dir -= 1
             elif event.key ==SDLK_LEFT:
@@ -44,10 +45,6 @@ character = load_image('animation_sheet.png')
 
 running = True
 rightLeft = True
-#if running == False:
-    # idle = True
-# elif running == True:
-#     idle = False
 
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
@@ -58,11 +55,19 @@ while running:
     clear_canvas()
     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
 
-    if rightLeft == True:
-        character.clip_draw(frame * 100, 100, 100, 100, x, y)
+    if event.type == SDL_KEYDOWN:
+        if rightLeft == True:
+            character.clip_draw(frame * 100, 100, 100, 100, x, y)
 
-    elif rightLeft == False:
-        character.clip_draw(frame * 100, 0, 100, 100, x, y)
+        elif rightLeft == False:
+            character.clip_draw(frame * 100, 0, 100, 100, x, y)
+
+    elif event.type == SDL_UP:
+        if rightLeft == True:
+             character.clip_draw(frame * 100, 300, 100, 100, x, y)
+
+        elif rightLeft == False:
+             character.clip_draw(frame * 100, 200, 100, 100, x, y)
 
     update_canvas()
     frame = (frame + 1) % 8
@@ -70,9 +75,14 @@ while running:
     y += upDown * 5
     handle_events()
 
-# while idle:
+# while not running:
 #     clear_canvas()
 #     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
-#     character.clip_draw(frame * 100, )
+#
+#
+#
+#     update_canvas()
+#     frame = (frame + 1) % 8
+#     handle_events()
 
 close_canvas()
