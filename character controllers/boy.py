@@ -184,7 +184,7 @@ class Boy:
         # self.x += self.dir * 1
         # self.x = clamp(0, self.x, 800)
         if self.event_q:
-            event = self.event_q.pop()
+            event = self.event_q.pop()  # pop은 파이썬 문법으로 리스트의 맨 마지막 요소를 리스트에서 꺼내버리는 함수
             self.cur_state.exit(self)
             self.cur_state = next_state[self.cur_state][event]
             self.cur_state.enter(self, event)
@@ -202,7 +202,7 @@ class Boy:
         #         self.image.clip_draw(self.frame * 100, 200, 100, 100, self.x, self.y)
 
     def add_event(self, event):
-        self.event_q.insert(0, event)
+        self.event_q.insert(0, event)  # insert는 파이썬 문법으로 첫 인자 번째에 두 번째 인자의 값을 추가하는 함수
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
