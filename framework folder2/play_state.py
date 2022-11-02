@@ -1,7 +1,9 @@
+import random
 from pico2d import *
 import game_framework
 import logo_state
 import item_state
+import boy_adjust_state
 
 class Grass:
     def __init__(self):
@@ -12,8 +14,8 @@ class Grass:
 
 class Boy:
     def __init__(self):
-        self.x, self.y = 0, 90
-        self.frame = 0
+        self.x, self.y = random.randint(0, 800), 90
+        self.frame = random.randint(0, 7)
         self.dir = 1 # 오른쪽
         self.image = load_image('animation_sheet.png')
         self.item = None
@@ -47,30 +49,37 @@ def handle_events():
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN:
-            if event.key == SDLK_ESCAPE:
-                game_framework.quit()
-            elif event.key == SDLK_i:
-                game_framework.push_state(item_state)
+            match event.key:
+                case pico2d.SDLK_ESCAPE:
+                    game_framework.quit()
+                case pico2d.SDLK_i:
+                    game_framework.push_state(item_state)
+                case pico2d.SDLK_b:
+                    game_framework.push_state(boy_adjust_state)
 
-boy = None # c로 따지믄 NULL
+# boy = None # c로 따지믄 NULL
+boys = [] # 여러 명의 소년들 리스트
 grass = None
 running = True
 
 # 초기화
 def enter():
-    global boy, grass, running
-    boy = Boy()
+    global grass, running
+    boys.append(Boy())
+    boys.append(Boy())
     grass = Grass()
     running = True
 
 # finalization code
 def exit():
-    global boy, grass
-    del boy
+    global grass
+    for boy in boys:
+        del boy
     del grass
 
 def update():
-    boy.update()
+    for boy in boys:
+        boy.update()
 
 def draw():
     clear_canvas()
@@ -79,10 +88,22 @@ def draw():
 
 def draw_world():
     grass.draw()
-    boy.draw()
+    for boy in boys:
+        boy.draw()
 
 def pause():
     pass
 
 def resume():
     pass
+
+def add_one_boy():
+    boys.append(Boy())
+
+def delete_one_boy():
+    if len(boys) >= 2:
+        boys.pop() # 리스트의 맨 마지막 요소를 꺼낸다. 즉, 제거하는 것과 동일
+
+def set_all_boys_items(item):
+    for boy in boys:
+        boy.item = item
