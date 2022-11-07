@@ -2,8 +2,10 @@ from pico2d import *
 from game_world import*
 
 class Grass:
+    image = None
     def __init__(self, x, y):
-        self.image = load_image('grass.png')
+        if Grass.image == None:
+            self.image = load_image('grass.png')
         self.x, self.y = x, y
 
     def draw(self):
