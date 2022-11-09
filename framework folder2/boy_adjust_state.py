@@ -3,7 +3,7 @@ import game_framework
 import play_state
 import title_state
 
-running = True
+running = True              
 image = None
 
 def enter():

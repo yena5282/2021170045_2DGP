@@ -3,7 +3,7 @@ import game_framework
 import game_world
 
 from grass import Grass
-from boy import Boy
+from bird import Bird
 
 
 boy = None
@@ -16,17 +16,26 @@ def handle_events():
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.quit()
-        else:
-            boy.handle_event(event)
+
 
 
 # 초기화
 def enter():
-    global boy, grass
-    boy = Boy()
+    global bird1, bird2, bird3, bird4, bird5, bird6, bird7, bird8, bird9, bird10, grass
+    bird1, bird2, bird3, bird4, bird5, bird6, bird7, bird8, bird9, bird10 = Bird(), Bird(),Bird(),Bird(),Bird(),Bird(),Bird(),Bird(),Bird(),Bird()
     grass = Grass()
     game_world.add_object(grass, 0)
-    game_world.add_object(boy, 1)
+    game_world.add_object(bird1, 1)
+    game_world.add_object(bird2, 1)
+    game_world.add_object(bird3, 1)
+    game_world.add_object(bird4, 1)
+    game_world.add_object(bird5, 1)
+    game_world.add_object(bird6, 1)
+    game_world.add_object(bird7, 1)
+    game_world.add_object(bird8, 1)
+    game_world.add_object(bird9, 1)
+    game_world.add_object(bird10, 1)
+
 
 
 # 종료
@@ -36,6 +45,7 @@ def exit():
 def update():
     for game_object in game_world.all_objects():
         game_object.update()
+    # delay(0.1)
 
 def draw_world():
     for game_object in game_world.all_objects():
